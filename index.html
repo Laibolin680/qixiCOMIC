@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" http-equiv="content-type" content="text/html">
+	<title>七夕动画</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/pageA.css">
+	<link rel="stylesheet" type="text/css" href="css/pageB.css">
+	<link rel="stylesheet" type="text/css" href="css/pageC.css">
+	<script type="text/javascript" src="javascript/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery-transit.min.js"></script>
+	<script type="text/javascript" src="javascript/Swipe.js"></script>
+	<script type="text/javascript" src="javascript/main.js"></script>
+	<script type="text/javascript" src="javascript/action.js"></script>
+</head>
+<body>
+	<div id="content">
+		<ul class="content-wrap">
+			<!-- 图一 -->
+			<li>
+				<div class="a_background">
+					<div class="a_background_top"></div>
+					<div class="a_background_middle"></div>
+					<div class="a_background_bottom"></div>
+				</div><!-- a_backgroundend -->
+				<div class="cloudArea">
+					<div class="cloud cloud1"></div>
+					<div class="cloud cloud2"></div>
+				</div>
+				<div id="sun"></div>
+			</li>
+			<!-- 图二 -->
+			<li>
+				<div class="b_background"></div>
+				<div class="b_background_preload"></div>
+
+				<div class="shop">
+					<div class="door">
+						<div class="door-left"></div>
+						<div class="door-right"></div>
+					</div>
+
+					<div class="lamp"></div>
+				</div><!-- shopend -->
+				<div class="bird"></div>
+			</li>
+			<!-- 图三 -->
+			<li>
+				<div class="c_background">
+					<div class="c_background_top"></div>
+					<div class="c_background_middle"></div>
+					<div class="c_background_bottom"></div>
+				</div><!-- c_backgroundend -->
+				<div class="girl"></div>
+				<div class="bridge-bottom">
+					<div class="water">
+						<div id="water1" class="water_1"></div>
+						<div id="water2" class="water_2"></div>
+						<div id="water3" class="water_3"></div>
+						<div id="water4" class="water_4"></div>
+					</div>
+				</div><!-- bridge-bottomend -->
+				<ul class="stars">
+					<li class="stars1"></li>
+					<li class="stars2"></li>
+					<li class="stars3"></li>
+					<li class="stars4"></li>
+					<li class="stars5"></li>
+					<li class="stars6"></li>
+				</ul><!-- starsend -->
+				<div class="logo"></div>
+			</li>
+		</ul><!-- content-wrapend -->
+		<div id="boy" class="charector"></div>
+		<div id="snowflake"></div>
+		<div class="button">
+			<button>开始</button>
+		</div>
+	</div><!-- contentend -->
+	<script type="text/javascript">
+		var container = $('#content');
+		// 滑动函数调取
+		var swipe = Swipe(container);
+
+		visualWidth = container.width();
+		visualHeight = container.height();
+
+		// 页面滑动
+		function scrollTo(time, proportionX) {
+			var distX = container.width() * proportionX;
+			swipe.scrollTo(distX, time);
+		}
+
+		// 获取宽高
+		var getValue = function(className) {
+			var $elem = $('' + className + '');
+			return {
+				height: $elem.height(),
+				top: $elem.position().top
+			};
+		}
+		// 桥的Y轴
+		var bridgeY = function() {
+			var data2 = getValue('.c_background_middle');
+			return data2.top;
+		}();
+		// 小女孩
+		var girl = {
+			elem: $('.girl'),
+			getHeight: function() {
+				return this.elem.height()
+			},
+			setPosition: function() {
+				this.elem.css({
+					left: visualWidth / 2,
+					top: bridgeY - this.getHeight() * 1.5
+				});
+			},
+			getOffset: function() {
+				return this.elem.offset();
+			},
+			getWidth: function() {
+				return this.elem.width();
+			},
+			getPosition: function() {
+				return this.elem.position();
+			},
+			rotate: function() {
+				this.elem.addClass('girl-rotate');
+			}
+		};
+
+		// logo动画
+		var logo = {
+			elem: $('.logo'),
+			run: function() {
+				this.elem.addClass('logolightSpeedIn')
+					.on(animationEnd, function() {
+						$(this).addClass('logoshake').off();
+					});
+			}
+		};
+	</script>
+</body>
+</html>
